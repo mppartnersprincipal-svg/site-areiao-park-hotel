@@ -1,0 +1,24 @@
+---
+/** Cabeçalho de seção do DS: eyebrow + h2 + parágrafo. */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Nível do heading (2 por padrão). */
+  as?: 2 | 3;
+  class?: string;
+}
+const { eyebrow, title, as = 2, class: extraClass = "" } = Astro.props;
+const Heading = `h${as}` as "h2" | "h3";
+---
+
+<div class={`section-head ${extraClass}`.trim()}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <Heading>{title}</Heading>
+  {
+    Astro.slots.has("default") && (
+      <p>
+        <slot />
+      </p>
+    )
+  }
+</div>

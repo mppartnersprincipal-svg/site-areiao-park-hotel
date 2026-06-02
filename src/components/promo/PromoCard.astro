@@ -1,0 +1,239 @@
+---
+import Photo from "@/components/ui/Photo.astro";
+import { site } from "@/data/site";
+import type { ImageMetadata } from "astro";
+
+interface Faixa {
+  diariasMin: number;
+  desconto: string;
+  label?: string;
+}
+interface PromoData {
+  titulo: string;
+  codigo?: string;
+  descricao: string;
+  condicoes: string[];
+  faixas: Faixa[];
+  imagem?: ImageMetadata;
+  alt?: string;
+}
+interface Props {
+  promo: PromoData;
+  /** corpo renderizado (markdown) opcional */
+}
+const { promo } = Astro.props;
+const uid = (promo.codigo || promo.titulo)
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "");
+
+// faixas ordenadas por diariasMin (asc) para o cálculo no cliente
+const faixas = [...promo.faixas].sort((a, b) => a.diariasMin - b.diariasMin);
+const minDiarias = faixas.length ? faixas[0].diariasMin : 1;
+const startDiarias = minDiarias;
+---
+
+<article class="room promo-card" data-promo={uid}>
+  <Photo
+    src={promo.imagem}
+    alt={promo.alt ?? promo.titulo}
+    green={!promo.imagem}
+    class="promo-photo"
+    sizes="(max-width: 900px) 100vw, 33vw"
+    widths={[400, 600, 800]}
+  >
+    <span class="pin" style="color:rgba(246,240,228,.7);background:rgba(20,36,27,.4);">Pacote</span>
+  </Photo>
+  <div class="pad">
+    <span class="ey">Pacote</span>
+    <h3>{promo.titulo}</h3>
+    {promo.codigo && <div class="area">Código {promo.codigo}</div>}
+    <p class="desc">{promo.descricao}</p>
+
+    {
+      promo.condicoes.length > 0 && (
+        <ul class="amen">
+          {promo.condicoes.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      faixas.length > 0 && (
+        <div class="promo-calc">
+          <label for={`diarias-${uid}`}>Quantas diárias?</label>
+          <div class="stepper">
+            <button type="button" class="step" data-step="-1" aria-label="Menos diárias">–</button>
+            <input
+              id={`diarias-${uid}`}
+              class="diarias"
+              type="number"
+              min={minDiarias}
+              max="30"
+              value={startDiarias}
+              inputmode="numeric"
+              aria-label="Número de diárias"
+            />
+            <button type="button" class="step" data-step="1" aria-label="Mais diárias">+</button>
+          </div>
+          <p class="promo-result" aria-live="polite" data-faixas={JSON.stringify(faixas)}>
+            <span class="badge">—</span>
+          </p>
+        </div>
+      )
+    }
+
+    <div class="foot">
+      <a
+        class="btn btn-primary promo-wa"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="click_whatsapp"
+        data-origem={`Promoção · ${promo.titulo}`}
+      >
+        Reservar no WhatsApp
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .promo-card :global(.promo-photo) {
+    height: 210px;
+  }
+  .promo-calc {
+    margin: 4px 0 18px;
+    padding: 16px 18px;
+    background: var(--sand-100);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--r-md);
+  }
+  .promo-calc label {
+    display: block;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    color: var(--ink-700);
+    margin-bottom: 10px;
+  }
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stepper .step {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--sand-300);
+    background: var(--white);
+    border-radius: var(--r-sm);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-900);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .stepper .step:hover {
+    border-color: var(--gold-500);
+    color: var(--gold-700);
+  }
+  .stepper .diarias {
+    width: 64px;
+    text-align: center;
+    border: 1px solid var(--sand-300);
+    border-radius: var(--r-sm);
+    padding: 8px;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--ink-900);
+    background: var(--white);
+  }
+  .promo-result {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--ink-700);
+  }
+  .promo-result .badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: var(--tr-wide);
+    text-transform: uppercase;
+    color: var(--gold-700);
+    background: rgba(190, 154, 74, 0.14);
+    border: 1px solid var(--gold-400);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .promo-card .foot {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .promo-card .promo-wa {
+    width: 100%;
+    justify-content: center;
+  }
+</style>
+
+<script
+  is:inline
+  define:vars={{ uid, whatsapp: site.contact.whatsapp, siteName: site.name, titulo: promo.titulo, codigo: promo.codigo || "" }}
+>
+  (function () {
+    var card = document.querySelector('[data-promo="' + uid + '"]');
+    if (!card) return;
+    var input = card.querySelector(".diarias");
+    var result = card.querySelector(".promo-result");
+    var badge = result ? result.querySelector(".badge") : null;
+    var waLink = card.querySelector(".promo-wa");
+    var faixas = result ? JSON.parse(result.getAttribute("data-faixas") || "[]") : [];
+
+    function faixaFor(diarias) {
+      var chosen = null;
+      for (var i = 0; i < faixas.length; i++) {
+        if (diarias >= faixas[i].diariasMin) chosen = faixas[i];
+      }
+      return chosen;
+    }
+
+    function buildWa(diarias, faixa) {
+      var extra = 'Tenho interesse na promoção "' + titulo + '"';
+      if (codigo) extra += " (código " + codigo + ")";
+      extra += " para " + diarias + " diária" + (diarias > 1 ? "s" : "");
+      if (faixa) extra += " — " + faixa.desconto;
+      extra += ".";
+      var msg = "Olá! Vim pelo site do " + siteName + ". " + extra;
+      return "https://wa.me/" + whatsapp + "?text=" + encodeURIComponent(msg);
+    }
+
+    function update() {
+      var diarias = parseInt(input.value, 10);
+      if (isNaN(diarias) || diarias < 1) diarias = 1;
+      var faixa = faixaFor(diarias);
+      if (badge) {
+        badge.textContent = faixa
+          ? faixa.desconto + (faixa.label ? " · " + faixa.label : "")
+          : "Sem desconto para esta faixa";
+      }
+      if (waLink) waLink.setAttribute("href", buildWa(diarias, faixa));
+    }
+
+    card.querySelectorAll(".step").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var delta = parseInt(b.getAttribute("data-step"), 10) || 0;
+        var v = parseInt(input.value, 10) || 1;
+        v = Math.min(30, Math.max(1, v + delta));
+        input.value = String(v);
+        update();
+      });
+    });
+    if (input) input.addEventListener("input", update);
+    update();
+  })();
+</script>

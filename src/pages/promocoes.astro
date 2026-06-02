@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import PromoCard from "@/components/promo/PromoCard.astro";
+import CtaBand from "@/components/sections/CtaBand.astro";
+
+import heroFoto from "@/assets/images/quartos/839581844.jpg";
+
+const promocoes = (await getCollection("promocoes"))
+  .filter((p) => p.data.ativo)
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<PageLayout
+  title="Promoções e Pacotes"
+  description="Pacotes e promoções do Areião Park Hotel, com desconto progressivo por número de diárias. Escolha sua condição e fale direto com a recepção pelo WhatsApp."
+  path="/promocoes"
+  whatsappOrigem="Promoções"
+>
+  <section class="section" style="padding-bottom:clamp(40px,5vw,64px);">
+    <div class="guide">
+      <Hero
+        eyebrow="Promoções & Pacotes"
+        title="Quanto mais você fica, mais você economiza"
+        text="Descontos por número de diárias e pacotes especiais. Escolha quantas noites pretende ficar e fale com a recepção pelo WhatsApp."
+        image={heroFoto}
+        imageAlt="Acomodação em destaque para promoções do Areião Park Hotel"
+        as="h2"
+      />
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <SectionHead eyebrow="Como funciona" title="Desconto por diárias, em 3 passos">
+        Selecione a promoção, informe quantas diárias deseja e clique para falar
+        no WhatsApp. A recepção recebe a promoção escolhida e finaliza sua reserva.
+      </SectionHead>
+
+      {
+        promocoes.length > 0 ? (
+          <div class="cards-3">
+            {promocoes.map((p) => (
+              <PromoCard promo={p.data} />
+            ))}
+          </div>
+        ) : (
+          <p class="lede">
+            Nenhuma promoção ativa no momento. Fale conosco pelo WhatsApp para
+            conhecer as condições atuais.
+          </p>
+        )
+      }
+
+      <p class="note" style="margin-top:24px;">
+        {/* TODO (cliente): as promoções são gerenciadas em src/content/promocoes
+            (um arquivo .md por promoção). Validar faixas de desconto e condições. */}
+        Promoções sujeitas a disponibilidade. Condições e descontos podem ser
+        ajustados pelo hotel.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <CtaBand
+        title="Não encontrou o que procura?"
+        text="Fale com a recepção e monte um pacote sob medida para a sua viagem."
+        origem="Promoções · CTA"
+        secondaryLabel="Falar no WhatsApp"
+      />
+    </div>
+  </section>
+</PageLayout>

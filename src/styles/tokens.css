@@ -1,0 +1,54 @@
+/* =====================================================================
+   Areião Park Hotel — Tokens do Design System (fonte de verdade)
+   Extraídos verbatim de docs/design-system.html (:root).
+   NÃO alterar valores sem atualizar o Design System.
+   ===================================================================== */
+:root {
+  /* ---------- VERDES (superfícies escuras + marca) ---------- */
+  --green-900: #14241b; /* floresta profunda */
+  --green-800: #1b3225; /* superfície escura principal */
+  --green-700: #244231; /* card sobre escuro / hover */
+  --green-600: #2f543f;
+  --green-500: #3c6a50; /* sálvia-floresta médio */
+  --green-300: #88a491; /* sálvia suave */
+
+  /* ---------- DOURADO (acento único) ---------- */
+  --gold-700: #876730;
+  --gold-600: #a6833a; /* hover */
+  --gold-500: #be9a4a; /* dourado primário */
+  --gold-400: #cfaf66;
+  --gold-300: #e0c892; /* champagne claro */
+
+  /* ---------- AREIA / CREME (superfícies claras) ---------- */
+  --cream: #f6f0e4; /* página clara */
+  --sand-100: #f1e9d9;
+  --sand-200: #e9dec9;
+  --sand-300: #dbcaad; /* bordas sobre claro */
+
+  /* ---------- TINTA / NEUTROS ---------- */
+  --ink-900: #1e241f; /* texto principal (quente, verde-tintado) */
+  --ink-700: #474c42; /* texto secundário */
+  --ink-500: #7b7e72; /* texto terciário */
+  --white: #ffffff;
+
+  /* ---------- SEMÂNTICOS ---------- */
+  --bg-page: var(--cream);
+  --bg-dark: var(--green-800);
+  --accent: var(--gold-500);
+  --accent-hover: var(--gold-600);
+  --on-gold: #1e241f;
+
+  /* ---------- TIPOGRAFIA ---------- */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  /* ---------- ESCALA / RAIO / SOMBRA ---------- */
+  --tr-wide: 0.14em;
+  --tr-xwide: 0.28em;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --shadow-1: 0 14px 34px rgba(20, 36, 27, 0.1);
+  --shadow-2: 0 24px 60px rgba(20, 36, 27, 0.16);
+  --maxw: 1200px;
+}

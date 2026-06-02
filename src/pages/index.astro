@@ -1,0 +1,298 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import BookingBar from "@/components/booking/BookingBar.astro";
+import Split from "@/components/sections/Split.astro";
+import Triad from "@/components/sections/Triad.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import RoomCard from "@/components/cards/RoomCard.astro";
+import ExperienceTile from "@/components/cards/ExperienceTile.astro";
+import Button from "@/components/ui/Button.astro";
+import { site } from "@/data/site";
+import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
+
+import fachada from "@/assets/images/fachada.jpg";
+import splitFoto from "@/assets/images/quartos/839581915.jpg";
+import expFoto from "@/assets/images/quartos/864097680.jpg";
+
+const rooms = (await getCollection("rooms"))
+  .filter((r) => r.data.destaque)
+  .sort((a, b) => a.data.ordem - b.data.ordem)
+  .slice(0, 3);
+
+const reserveUrl = buildReservationUrl();
+---
+
+<PageLayout
+  title="Areião Park Hotel — Hotel 4 estrelas em Goiânia"
+  description="Hospitalidade familiar com padrão quatro estrelas em Goiânia. Acomodações confortáveis, café da manhã, eventos e reservas diretas."
+  path="/"
+  includeHotelSchema={true}
+  whatsappOrigem="Home"
+>
+  <!-- HERO -->
+  <section class="section" style="padding-bottom:0;">
+    <div class="guide">
+      <Hero
+        eyebrow="Goiânia · 4 estrelas"
+        title="Sua casa fora de casa, com a excelência que você merece."
+        text="Hospitalidade familiar e estrutura de grande hotel. Conforto para uma noite de negócios ou uma longa temporada."
+        image={fachada}
+        imageAlt="Fachada do Areião Park Hotel em Goiânia"
+        as="h1"
+      >
+        <Button
+          slot="actions"
+          variant="primary"
+          href={reserveUrl}
+          {...RESERVE_LINK_ATTRS}
+          data-track="click_reservar"
+          data-origem="Hero Home"
+        >
+          Reservar agora
+        </Button>
+        <Button slot="actions" variant="outline" href="/o-hotel">
+          Conheça o hotel
+        </Button>
+      </Hero>
+
+      <BookingBar anchored />
+    </div>
+  </section>
+
+  <!-- SPLIT "O HOTEL" -->
+  <section class="section" style="padding-top:clamp(48px,6vw,80px);">
+    <div class="guide">
+      <Split
+        eyebrow="O Hotel"
+        title="Tradição que cresce, hospitalidade que evolui"
+        text="Nascemos como um hotel familiar e é essa essência que carregamos até hoje. São mais de dez anos de pioneirismo, unindo a atenção aos detalhes de uma gestão familiar com a estrutura de um grande hotel."
+        image={splitFoto}
+        imageAlt="Ambiente acolhedor do Areião Park Hotel"
+      >
+        <Button slot="actions" variant="link" href="/o-hotel">Saiba mais</Button>
+      </Split>
+
+      <!-- TRÍADE -->
+      <Triad
+        cols={[
+          {
+            title: "Hospedagem",
+            text: "Acomodações equipadas para garantir sua comodidade, seja por uma noite ou por semanas, com a praticidade que você precisa.",
+            cta: "Ver acomodações",
+            href: "/acomodacoes",
+          },
+          {
+            title: "Gastronomia",
+            text: "Comece o dia com nosso café da manhã, reconhecido pela variedade. Um cardápio vasto para todos os paladares.",
+            cta: "Conheça",
+            href: "/gastronomia",
+          },
+          {
+            title: "Contato",
+            text: "Diante de qualquer solicitação — dúvidas, orçamentos ou sugestões — nossa equipe está à disposição para atendê-lo.",
+            cta: "Fale conosco",
+            href: "/contato",
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ACOMODAÇÕES EM DESTAQUE -->
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Acomodações" title="Conforto pensado para você">
+        Quartos planejados para descanso e produtividade, com o cuidado de quem
+        entende de hospitalidade.
+      </SectionHead>
+      <div class="cards-3">
+        {rooms.map((room) => <RoomCard room={room.data} />)}
+      </div>
+      <div style="margin-top:36px;">
+        <Button variant="link" href="/acomodacoes">Ver todas as acomodações</Button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- EXPERIÊNCIAS -->
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Experiências" title="Mais que uma estadia">
+        Da mesa farta do café da manhã às áreas de convivência e aos espaços para
+        eventos.
+      </SectionHead>
+      <div class="exp-grid">
+        <ExperienceTile
+          eyebrow="Gastronomia"
+          title="Café da manhã"
+          text="Variedade reconhecida, feita na hora"
+          href="/gastronomia"
+          green
+        />
+        <ExperienceTile
+          eyebrow="Lazer"
+          title="Área Verde & Convivência"
+          text="Descanso e comodidade"
+          image={expFoto}
+          imageAlt="Área de convivência do Areião Park Hotel"
+          href="/galeria"
+        />
+        <ExperienceTile
+          eyebrow="Eventos"
+          title="Auditório Moderno"
+          text="Estrutura para eventos e congressos"
+          href="/eventos"
+          green
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVA SOCIAL -->
+  <section class="section social-proof" style="padding-top:0;">
+    <div class="guide">
+      <div class="proof-band">
+        <div class="proof-lead">
+          <span class="eyebrow">Reconhecimento</span>
+          <p>Mais de uma década recebendo bem, com avaliações que falam por nós.</p>
+        </div>
+        <ul class="proof-facts">
+          {
+            site.facts.map((f) => (
+              <li>
+                <b>{f.value}</b>
+                <span>{f.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAIXA DE PROMOÇÕES -->
+  <section class="section promo-strip">
+    <div class="guide">
+      <div class="promo-band on-dark">
+        <span class="eyebrow">Pacotes & Promoções</span>
+        <h2>Mais diárias, mais vantagens</h2>
+        <p>
+          Conheça nossos pacotes e o desconto progressivo por número de diárias.
+          Fale direto com a recepção pelo WhatsApp.
+        </p>
+        <Button variant="ghost-gold" href="/promocoes">Ver pacotes</Button>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Prova social — faixa sóbria sobre superfície clara */
+    .proof-band {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      border: 1px solid var(--sand-300);
+      border-radius: var(--r-lg);
+      background: var(--white);
+      padding: 36px clamp(24px, 4vw, 44px);
+    }
+    .proof-lead {
+      max-width: 34ch;
+    }
+    .proof-lead .eyebrow {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .proof-lead p {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.4vw, 30px);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--ink-900);
+    }
+    .proof-facts {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(24px, 4vw, 46px);
+    }
+    .proof-facts li {
+      text-align: center;
+    }
+    .proof-facts b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .proof-facts span {
+      display: block;
+      margin-top: 8px;
+      font-size: 11px;
+      letter-spacing: var(--tr-wide);
+      text-transform: uppercase;
+      color: var(--ink-500);
+    }
+
+    /* Faixa de promoções — superfície escura */
+    .promo-band {
+      background: var(--green-800);
+      color: var(--cream);
+      border-radius: var(--r-lg);
+      padding: clamp(40px, 6vw, 72px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-band::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        60% 80% at 50% 0%,
+        rgba(190, 154, 74, 0.16),
+        transparent 70%
+      );
+    }
+    .promo-band > * {
+      position: relative;
+      z-index: 1;
+    }
+    .promo-band .eyebrow {
+      color: var(--gold-300);
+      display: block;
+      margin-bottom: 14px;
+    }
+    .promo-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3.6vw, 46px);
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+    .promo-band p {
+      color: rgba(246, 240, 228, 0.82);
+      font-weight: 300;
+      max-width: 52ch;
+      margin: 0 auto 30px;
+    }
+    @media (max-width: 760px) {
+      .proof-band {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</PageLayout>

@@ -1,0 +1,109 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Split from "@/components/sections/Split.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import CtaBand from "@/components/sections/CtaBand.astro";
+import { site } from "@/data/site";
+
+import fachada from "@/assets/images/fachada.jpg";
+import historiaFoto from "@/assets/images/quartos/839583703.jpg";
+
+const pilares = [
+  {
+    title: "Gastronomia que marca",
+    text: "Café da manhã reconhecido pela variedade e um restaurante com cardápio vasto, do almoço de negócios ao jantar em família.",
+  },
+  {
+    title: "Estrutura completa",
+    text: "Auditório, elevadores e apartamentos planejados para trabalho e lazer — tudo o que você precisa em um só lugar.",
+  },
+  {
+    title: "Conforto em cada estadia",
+    text: "Acomodações pensadas para estadias curtas ou longas, com a praticidade de quem viaja a trabalho ou a passeio.",
+  },
+  {
+    title: "Essência familiar",
+    text: "A atenção aos detalhes de uma gestão familiar com o padrão de um hotel quatro estrelas.",
+  },
+];
+---
+
+<PageLayout
+  title="O Hotel"
+  description="Mais de uma década de hospitalidade familiar com padrão quatro estrelas em Goiânia. Conheça a história e os pilares do Areião Park Hotel."
+  path="/o-hotel"
+  whatsappOrigem="O Hotel"
+>
+  <section class="section" style="padding-bottom:clamp(40px,5vw,64px);">
+    <div class="guide">
+      <Hero
+        eyebrow="O Hotel"
+        title="Tradição que cresce. Hospitalidade que evolui."
+        text="Mais de dez anos recebendo bem — e agora uma nova fase, com a abertura de uma segunda unidade."
+        image={fachada}
+        imageAlt="Fachada do Areião Park Hotel"
+        as="h2"
+      />
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <Split
+        eyebrow="Nossa história"
+        title="Um sonho de família que virou referência"
+        text="Nascemos como um hotel familiar e é essa essência que carregamos até hoje. São mais de dez anos de pioneirismo e paixão por receber bem, unindo a atenção aos detalhes de uma gestão familiar com a estrutura de um grande hotel. Hoje, somos um hotel quatro estrelas com 35 acomodações — e seguimos crescendo."
+        image={historiaFoto}
+        imageAlt="Ambiente acolhedor do Areião Park Hotel"
+      />
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Nossos pilares" title="O que nos torna o Areião">
+        Quatro compromissos que guiam cada detalhe da sua experiência.
+      </SectionHead>
+      <div class="principles">
+        {
+          pilares.map((p, i) => (
+            <div>
+              <span class="n">{i + 1}</span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="section">
+    <div class="guide">
+      <ul class="facts">
+        {
+          site.facts.map((f) => (
+            <li>
+              <b>{f.value}</b>
+              <span>{f.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <CtaBand
+        title="Venha viver a experiência Areião"
+        origem="O Hotel"
+      />
+    </div>
+  </section>
+</PageLayout>

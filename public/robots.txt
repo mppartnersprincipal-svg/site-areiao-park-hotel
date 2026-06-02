@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO (cliente): confirmar domínio final. Manter em sincronia com astro.config.mjs.
+Sitemap: https://www.areiaoparkhotel.com.br/sitemap-index.xml

@@ -1,0 +1,111 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import RoomCard from "@/components/cards/RoomCard.astro";
+import CtaBand from "@/components/sections/CtaBand.astro";
+
+import heroFoto from "@/assets/images/quartos/839583703.jpg";
+
+const rooms = (await getCollection("rooms")).sort(
+  (a, b) => a.data.ordem - b.data.ordem,
+);
+
+// Serviços confirmados no briefing (seção 7) + confirmados no PRD.
+// Comodidades dentro do quarto serão confirmadas pelo cliente (ver TODO).
+const amenidadesComuns = [
+  "Wi-Fi gratuito",
+  "Café da manhã",
+  "Restaurante",
+  "Estacionamento",
+  "Recepção 24 horas",
+  "Elevador",
+];
+---
+
+<PageLayout
+  title="Acomodações"
+  description="Conheça as acomodações do Areião Park Hotel: opções para casal, twin e família, todas com café da manhã, Wi-Fi e conforto quatro estrelas."
+  path="/acomodacoes"
+  whatsappOrigem="Acomodações"
+>
+  <section class="section" style="padding-bottom:clamp(40px,5vw,64px);">
+    <div class="guide">
+      <Hero
+        eyebrow="Acomodações"
+        title="Um espaço para cada viagem"
+        text="De uma noite de negócios a uma temporada em família — escolha o quarto ideal para a sua estadia."
+        image={heroFoto}
+        imageAlt="Acomodação do Areião Park Hotel"
+        as="h2"
+      />
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <SectionHead eyebrow="Tipos de quarto" title="Escolha a sua Suíte Luxo">
+        Três configurações de Suíte Luxo para o seu perfil de viagem. Para
+        reservar, clique em “Reservar” ou fale com a recepção pelo WhatsApp.
+      </SectionHead>
+      <div class="cards-3">
+        {rooms.map((room) => <RoomCard room={room.data} />)}
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Comodidades" title="Serviços do hotel" />
+      <ul class="amen-grid">
+        {amenidadesComuns.map((a) => <li>{a}</li>)}
+      </ul>
+      {/* TODO (cliente): confirmar as comodidades de dentro do quarto
+          (ar-condicionado, TV, frigobar, escrivaninha etc.) — o briefing só
+          lista os serviços do hotel acima. */}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <CtaBand
+        title="Pronto para reservar?"
+        text="Reserve em poucos cliques pelo nosso sistema ou fale direto com a recepção."
+        origem="Acomodações"
+      />
+    </div>
+  </section>
+
+  <style>
+    .amen-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 40px;
+    }
+    .amen-grid li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 15.5px;
+      color: var(--ink-700);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--sand-200);
+    }
+    .amen-grid li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    @media (max-width: 760px) {
+      .amen-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</PageLayout>

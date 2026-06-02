@@ -1,0 +1,47 @@
+---
+/**
+ * Campo de formulário do DS. Estilos: "underline" (leve, sobre foto) e
+ * "boxed" (denso, radius 8px). Renderiza label + input.
+ */
+interface Props {
+  label: string;
+  name: string;
+  id?: string;
+  variant?: "underline" | "boxed";
+  type?: string;
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+  inputmode?: string;
+  autocomplete?: string;
+  class?: string;
+}
+const {
+  label,
+  name,
+  id = name,
+  variant = "underline",
+  type = "text",
+  placeholder,
+  value,
+  required = false,
+  inputmode,
+  autocomplete,
+  class: extraClass = "",
+} = Astro.props;
+---
+
+<div class={`field ${extraClass}`.trim()}>
+  <label for={id}>{label}</label>
+  <input
+    class={variant}
+    id={id}
+    name={name}
+    type={type}
+    placeholder={placeholder}
+    value={value}
+    required={required}
+    inputmode={inputmode}
+    autocomplete={autocomplete}
+  />
+</div>

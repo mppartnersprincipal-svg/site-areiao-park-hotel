@@ -1,0 +1,137 @@
+# Hotel Areião Park - Informações dos Quartos
+
+## Quarto Duplo
+
+### Capacidade
+
+* Até 2 hóspedes
+
+### Cama
+
+* 1 cama de casal
+
+### Tamanho
+
+* 18 m²
+
+### Vista
+
+* Vista para a cidade
+
+### Banheiro
+
+* Banheiro privativo
+* Chuveiro
+* Produtos de higiene gratuitos
+* Secador de cabelo
+* Toalhas
+* Papel higiênico
+
+### Conforto
+
+* Ar-condicionado
+* Insonorização
+* Área de estar
+* Piso em porcelanato/mármore
+* Guarda-roupa
+* Mesa de jantar
+
+### Tecnologia
+
+* TV de tela plana
+* Canais via satélite
+* Serviço de streaming (Netflix e similares)
+* Wi-Fi gratuito
+
+### Área de Trabalho
+
+* Mesa/escrivaninha
+
+### Outros Itens
+
+* Geladeira
+* Ferro de passar
+* Entrada privativa
+* Tomada próxima à cama
+* Berço disponível mediante solicitação
+
+### Políticas
+
+* Cancelamento gratuito (dependendo da tarifa)
+* Sem necessidade de pré-pagamento em algumas tarifas
+
+---
+
+## Suíte
+
+### Camas
+
+* 1 cama de casal grande (Queen/King, conforme disponibilidade)
+
+### Capacidade
+
+* Até 2 hóspedes
+
+### Observações
+
+* Categoria listada separadamente no Booking.
+* Especificações completas não estavam disponíveis no conteúdo indexado.
+
+---
+
+## Estúdio Duplo Deluxe
+
+### Camas
+
+* 2 camas de solteiro
+
+### Capacidade
+
+* Até 2 hóspedes
+
+### Observações
+
+* Categoria disponível no Booking.
+* Detalhes completos de comodidades não estavam disponíveis no conteúdo indexado.
+
+---
+
+## Quarto Triplo Luxo
+
+### Camas
+
+* 3 camas de solteiro
+
+### Capacidade
+
+* Até 3 hóspedes
+
+### Observações
+
+* Categoria disponível no Booking.
+* Detalhes completos de comodidades não estavam disponíveis no conteúdo indexado.
+
+---
+
+# Resumo Geral
+
+| Tipo de Quarto       | Camas                  | Capacidade |
+| -------------------- | ---------------------- | ---------- |
+| Quarto Duplo         | 1 cama de casal        | 2 hóspedes |
+| Suíte                | 1 cama de casal grande | 2 hóspedes |
+| Estúdio Duplo Deluxe | 2 camas de solteiro    | 2 hóspedes |
+| Quarto Triplo Luxo   | 3 camas de solteiro    | 3 hóspedes |
+
+## Comodidades Gerais da Propriedade
+
+* Wi-Fi gratuito
+* Ar-condicionado
+* Estacionamento
+* Recepção
+* Quartos para não fumantes
+* Serviço de limpeza
+* Elevador
+
+## Observação
+
+As informações acima foram obtidas a partir dos dados públicos disponíveis para a propriedade. Algumas categorias de quartos possuem detalhes limitados devido à forma como o Booking exibe disponibilidade e especificações dinamicamente.

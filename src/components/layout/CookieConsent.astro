@@ -1,0 +1,97 @@
+---
+/** Banner de consentimento de cookies (LGPD, PRD §6.10). */
+---
+
+<div
+  class="cookie"
+  id="cookie-banner"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Aviso de cookies"
+  hidden
+>
+  <p class="cookie-text">
+    Usamos cookies para melhorar sua experiência e analisar o tráfego do site.
+    Ao continuar navegando, você concorda com nossa
+    <a href="/politica-de-privacidade">Política de Privacidade</a>.
+  </p>
+  <div class="cookie-actions">
+    <button type="button" class="btn btn-outline cookie-decline" data-cookie="decline">
+      Recusar
+    </button>
+    <button type="button" class="btn btn-primary cookie-accept" data-cookie="accept">
+      Aceitar
+    </button>
+  </div>
+</div>
+
+<style>
+  .cookie {
+    position: fixed;
+    left: clamp(12px, 4vw, 28px);
+    bottom: clamp(12px, 4vw, 28px);
+    z-index: 130;
+    max-width: 420px;
+    background: var(--green-800);
+    color: var(--cream);
+    border: 1px solid rgba(246, 240, 228, 0.16);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-2);
+    padding: 22px 24px;
+  }
+  .cookie-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(246, 240, 228, 0.86);
+    margin-bottom: 18px;
+  }
+  .cookie-text a {
+    color: var(--gold-300);
+    text-decoration: underline;
+  }
+  .cookie-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+  .cookie .btn {
+    padding: 12px 22px;
+  }
+  .cookie .btn-outline {
+    border-color: rgba(246, 240, 228, 0.55);
+    color: var(--cream);
+  }
+  .cookie .btn-outline:hover {
+    background: var(--cream);
+    color: var(--green-800);
+    border-color: var(--cream);
+  }
+  @media (max-width: 560px) {
+    .cookie {
+      left: 12px;
+      right: 12px;
+      max-width: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = "areiao-cookie-consent";
+    var banner = document.getElementById("cookie-banner");
+    if (!banner) return;
+    try {
+      if (!localStorage.getItem(KEY)) banner.hidden = false;
+    } catch (e) {
+      banner.hidden = false;
+    }
+    banner.addEventListener("click", function (e) {
+      var btn = e.target instanceof Element ? e.target.closest("[data-cookie]") : null;
+      if (!btn) return;
+      try {
+        localStorage.setItem(KEY, btn.getAttribute("data-cookie"));
+      } catch (e) {}
+      banner.hidden = true;
+    });
+  })();
+</script>

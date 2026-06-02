@@ -1,0 +1,30 @@
+---
+import Button from "@/components/ui/Button.astro";
+
+/** Tríade de chamadas (DS §08). */
+interface Col {
+  title: string;
+  text: string;
+  cta: string;
+  href: string;
+  newTab?: boolean;
+}
+interface Props {
+  cols: Col[];
+}
+const { cols } = Astro.props;
+---
+
+<div class="triad">
+  {
+    cols.map((col) => (
+      <div class="col">
+        <h3>{col.title}</h3>
+        <p>{col.text}</p>
+        <Button variant="link" href={col.href} newTab={col.newTab}>
+          {col.cta}
+        </Button>
+      </div>
+    ))
+  }
+</div>

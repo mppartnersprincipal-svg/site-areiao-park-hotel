@@ -1,0 +1,152 @@
+---
+import { Image } from "astro:assets";
+import { galleryItems, galleryFilters } from "@/data/gallery";
+---
+
+<div class="filters" role="group" aria-label="Filtros da galeria">
+  {
+    galleryFilters.map((f, i) => (
+      <button
+        class={`chip${i === 0 ? " active" : ""}`}
+        type="button"
+        data-f={f.id}
+        aria-pressed={i === 0 ? "true" : "false"}
+      >
+        {f.label}
+      </button>
+    ))
+  }
+</div>
+
+<div class="gallery">
+  {
+    galleryItems.map((item) => (
+      <button
+        class={`gtile${item.size ? " " + item.size : ""}`}
+        type="button"
+        data-c={item.category}
+        data-full={item.src.src}
+        data-alt={item.alt}
+        aria-label={`Ampliar: ${item.alt}`}
+      >
+        <div class="ph-photo has-img">
+          <Image
+            class="fill"
+            src={item.src}
+            alt={item.alt}
+            widths={[300, 500, 700]}
+            sizes="(max-width: 760px) 50vw, 25vw"
+            loading="lazy"
+          />
+        </div>
+        <span class="plus" aria-hidden="true">+</span>
+        <span class="tag">{item.tag}</span>
+      </button>
+    ))
+  }
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada" hidden>
+  <button class="lb-close" type="button" aria-label="Fechar">×</button>
+  <img class="lb-img" id="lb-img" src="" alt="" />
+</div>
+
+<style>
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(20, 36, 27, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 5vw, 60px);
+  }
+  .lightbox[hidden] {
+    display: none;
+  }
+  .lb-img {
+    max-width: 100%;
+    max-height: 88vh;
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-2);
+  }
+  .lb-close {
+    position: absolute;
+    top: clamp(12px, 3vw, 28px);
+    right: clamp(12px, 3vw, 28px);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(246, 240, 228, 0.4);
+    background: transparent;
+    color: var(--cream);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lb-close:hover {
+    border-color: var(--gold-400);
+    color: var(--gold-300);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Filtros
+    var chips = document.querySelectorAll(".chip");
+    var tiles = document.querySelectorAll(".gtile");
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        chips.forEach(function (x) {
+          x.classList.remove("active");
+          x.setAttribute("aria-pressed", "false");
+        });
+        c.classList.add("active");
+        c.setAttribute("aria-pressed", "true");
+        var f = c.getAttribute("data-f");
+        tiles.forEach(function (t) {
+          var match = f === "all" || t.getAttribute("data-c") === f;
+          t.classList.toggle("hidden", !match);
+        });
+      });
+    });
+
+    // Lightbox
+    var lb = document.getElementById("lightbox");
+    var lbImg = document.getElementById("lb-img");
+    var closeBtn = lb ? lb.querySelector(".lb-close") : null;
+    var lastFocus = null;
+
+    function open(full, alt) {
+      if (!lb || !lbImg) return;
+      lbImg.setAttribute("src", full);
+      lbImg.setAttribute("alt", alt || "");
+      lb.hidden = false;
+      lastFocus = document.activeElement;
+      if (closeBtn) closeBtn.focus();
+    }
+    function close() {
+      if (!lb) return;
+      lb.hidden = true;
+      lbImg.setAttribute("src", "");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    tiles.forEach(function (t) {
+      t.addEventListener("click", function () {
+        open(t.getAttribute("data-full"), t.getAttribute("data-alt"));
+      });
+    });
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    if (lb)
+      lb.addEventListener("click", function (e) {
+        if (e.target === lb) close();
+      });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lb && !lb.hidden) close();
+    });
+  })();
+</script>

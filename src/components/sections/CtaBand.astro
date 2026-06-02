@@ -1,0 +1,51 @@
+---
+import Button from "@/components/ui/Button.astro";
+import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
+import { buildWhatsAppUrl, WHATSAPP_LINK_ATTRS } from "@/lib/whatsapp";
+
+/** Faixa de CTA escura: Reservar (HSystem) + Fale conosco (WhatsApp). */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  origem: string;
+  /** label do botão secundário (WhatsApp) */
+  secondaryLabel?: string;
+}
+const {
+  eyebrow,
+  title,
+  text,
+  origem,
+  secondaryLabel = "Fale conosco",
+} = Astro.props;
+
+const reserveUrl = buildReservationUrl();
+const waUrl = buildWhatsAppUrl({ origem });
+---
+
+<div class="cta-band on-dark">
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <h2>{title}</h2>
+  {text && <p>{text}</p>}
+  <div class="btn-row">
+    <Button
+      variant="primary"
+      href={reserveUrl}
+      {...RESERVE_LINK_ATTRS}
+      data-track="click_reservar"
+      data-origem={origem}
+    >
+      Reservar agora
+    </Button>
+    <Button
+      variant="outline"
+      href={waUrl}
+      {...WHATSAPP_LINK_ATTRS}
+      data-track="click_whatsapp"
+      data-origem={origem}
+    >
+      {secondaryLabel}
+    </Button>
+  </div>
+</div>

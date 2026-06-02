@@ -1,0 +1,159 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import Button from "@/components/ui/Button.astro";
+import { site } from "@/data/site";
+import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
+import { buildWhatsAppUrl, WHATSAPP_LINK_ATTRS } from "@/lib/whatsapp";
+
+const waUrl = buildWhatsAppUrl({ origem: "Contato" });
+const reserveUrl = buildReservationUrl();
+const mapsQuery = encodeURIComponent(site.maps.query);
+const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
+
+const canais = [
+  {
+    title: "WhatsApp",
+    desc: "Atendimento rápido para reservas, dúvidas e orçamentos.",
+    cta: "Conversar no WhatsApp",
+    href: waUrl,
+    newTab: true,
+    track: "click_whatsapp",
+    origem: "Contato · WhatsApp",
+  },
+  {
+    title: "Telefone",
+    desc: site.contact.reception + " — ligue quando quiser.",
+    cta: site.contact.phoneDisplay,
+    href: `tel:${site.contact.phoneE164}`,
+    newTab: false,
+    track: "click_phone",
+    origem: "Contato · Telefone",
+  },
+  {
+    title: "E-mail",
+    desc: "Para mensagens mais detalhadas e envio de documentos.",
+    cta: site.contact.email,
+    href: `mailto:${site.contact.email}`,
+    newTab: false,
+    track: "click_email",
+    origem: "Contato · E-mail",
+  },
+];
+---
+
+<PageLayout
+  title="Contato"
+  description="Fale com o Areião Park Hotel: WhatsApp, telefone e e-mail. Recepção 24 horas em Goiânia — GO."
+  path="/contato"
+  whatsappOrigem="Contato"
+>
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Contato" title="Estamos à sua disposição">
+        Escolha o canal de sua preferência. Nossa recepção funciona 24 horas.
+      </SectionHead>
+
+      <div class="contato-grid">
+        {
+          canais.map((c) => (
+            <article class="contato-card">
+              <h3>{c.title}</h3>
+              <p>{c.desc}</p>
+              <Button
+                variant="link"
+                href={c.href}
+                newTab={c.newTab}
+                data-track={c.track}
+                data-origem={c.origem}
+              >
+                {c.cta}
+              </Button>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="contato-extra">
+        <div>
+          <h3>Endereço</h3>
+          <p class="addr-text">
+            {site.address.street} · {site.address.district}<br />
+            {site.address.city} — {site.address.region} · CEP {site.address.postalCode}
+          </p>
+          <div class="btn-row" style="margin-top:18px;">
+            <Button variant="outline" href={routeUrl} newTab>Como chegar</Button>
+            <Button
+              variant="primary"
+              href={reserveUrl}
+              {...RESERVE_LINK_ATTRS}
+              data-track="click_reservar"
+              data-origem="Contato"
+            >
+              Reservar agora
+            </Button>
+          </div>
+        </div>
+        <div>
+          <h3>Horário</h3>
+          <p class="addr-text">Recepção 24 horas, todos os dias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .contato-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .contato-card {
+      background: var(--white);
+      border: 1px solid var(--sand-300);
+      border-radius: var(--r-lg);
+      padding: 30px 30px 32px;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .contato-card:hover {
+      border-color: var(--gold-400);
+      box-shadow: var(--shadow-1);
+      transform: translateY(-3px);
+    }
+    .contato-card h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .contato-card p {
+      color: var(--ink-700);
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .contato-extra {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--sand-300);
+    }
+    .contato-extra h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .addr-text {
+      color: var(--ink-700);
+      line-height: 1.8;
+    }
+    @media (max-width: 860px) {
+      .contato-grid {
+        grid-template-columns: 1fr;
+      }
+      .contato-extra {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</PageLayout>

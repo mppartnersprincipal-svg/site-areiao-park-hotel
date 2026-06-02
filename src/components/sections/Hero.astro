@@ -1,0 +1,41 @@
+---
+import Photo from "@/components/ui/Photo.astro";
+import type { ImageMetadata } from "astro";
+
+/** Hero fotográfico com overlay verde (DS §08). */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  /** h1 na Home/página principal; h2 nas internas. */
+  as?: "h1" | "h2";
+}
+const { eyebrow, title, text, image, imageAlt = "", as = "h1" } = Astro.props;
+const Heading = as;
+const hasActions = Astro.slots.has("actions");
+---
+
+<div class="hero on-dark">
+  <Photo
+    src={image}
+    alt={imageAlt}
+    green={!image}
+    eager
+    sizes="100vw"
+    widths={[768, 1024, 1440, 1920]}
+  />
+  <div class="inner">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <Heading set:html={title} />
+    {text && <p>{text}</p>}
+    {
+      hasActions && (
+        <div class="btn-row">
+          <slot name="actions" />
+        </div>
+      )
+    }
+  </div>
+</div>

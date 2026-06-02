@@ -1,0 +1,84 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Split from "@/components/sections/Split.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import ExperienceTile from "@/components/cards/ExperienceTile.astro";
+import CtaBand from "@/components/sections/CtaBand.astro";
+
+import heroFoto from "@/assets/images/quartos/863764903.jpg";
+import splitFoto from "@/assets/images/quartos/864097680.jpg";
+---
+
+<PageLayout
+  title="Gastronomia"
+  description="Café da manhã reconhecido pela variedade e um restaurante com cardápio vasto. A gastronomia que marca a estadia no Areião Park Hotel."
+  path="/gastronomia"
+  whatsappOrigem="Gastronomia"
+>
+  <section class="section" style="padding-bottom:clamp(40px,5vw,64px);">
+    <div class="guide">
+      <Hero
+        eyebrow="Gastronomia"
+        title="A mesa que dá o tom da sua estadia"
+        text="Do café da manhã ao jantar em família, sabores que ficam na memória."
+        image={heroFoto}
+        imageAlt="Mesa do café da manhã do Areião Park Hotel"
+        as="h2"
+      />
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <Split
+        eyebrow="Café da manhã"
+        title="Comece o dia como ele merece"
+        text="Nosso café da manhã é reconhecido pela variedade: pães artesanais, bolos caseiros, tapioca feita na hora, frutas e sucos naturais. Uma mesa farta para começar bem o dia, seja a trabalho ou a passeio."
+        image={splitFoto}
+        imageAlt="Variedade do café da manhã"
+      />
+
+      <div style="margin-top:60px;">
+        <SectionHead eyebrow="Restaurante" title="Um cardápio para todos os paladares">
+          Do almoço executivo ao jantar tranquilo, nosso restaurante tem opções
+          para todos os momentos. Ingredientes selecionados e o tempero de quem
+          cozinha com cuidado.
+        </SectionHead>
+      </div>
+
+      <div class="exp-grid">
+        <ExperienceTile
+          eyebrow="Café da manhã"
+          title="Variedade feita na hora"
+          text="Pães, bolos, tapioca e sucos naturais"
+          green
+        />
+        <ExperienceTile
+          eyebrow="Restaurante"
+          title="Do almoço ao jantar"
+          text="Cardápio vasto para todos os paladares"
+          image={heroFoto}
+          imageAlt="Prato servido no restaurante do Areião Park Hotel"
+        />
+        <ExperienceTile
+          eyebrow="Ambiente"
+          title="Aconchego à mesa"
+          text="Um espaço acolhedor para suas refeições"
+          green
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(48px,6vw,80px);">
+    <div class="guide">
+      <CtaBand
+        title="Reserve sua estadia e prove você mesmo"
+        origem="Gastronomia"
+      />
+    </div>
+  </section>
+
+  {/* TODO (cliente): fotos profissionais do café da manhã, restaurante e pratos. */}
+</PageLayout>

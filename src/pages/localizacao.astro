@@ -1,0 +1,128 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import Button from "@/components/ui/Button.astro";
+import { site } from "@/data/site";
+
+const mapsQuery = encodeURIComponent(site.maps.query);
+// Embed estático (sem API key) — performance (PRD §8.3).
+const embedSrc = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
+// Rota "Como chegar"
+const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
+---
+
+<PageLayout
+  title="Localização"
+  description="Como chegar ao Areião Park Hotel: Rua S4, 68, Setor Bela Vista, Goiânia — GO. Próximo ao Jardim Botânico e ao centro da cidade."
+  path="/localizacao"
+  includeHotelSchema={true}
+  whatsappOrigem="Localização"
+>
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Localização" title="Bem no coração de Goiânia">
+        Fácil acesso, perto do que importa. Veja o mapa e trace sua rota.
+      </SectionHead>
+
+      <div class="loc-grid">
+        <div class="loc-info">
+          <h3>Endereço</h3>
+          <p class="addr-text">
+            {site.address.street}<br />
+            {site.address.district}<br />
+            {site.address.city} — {site.address.region}<br />
+            CEP {site.address.postalCode}
+            {/* TODO (cliente): confirmar CEP e coordenadas exatas. */}
+          </p>
+
+          <div class="loc-actions">
+            <Button
+              variant="primary"
+              href={routeUrl}
+              newTab
+              data-track="click_como_chegar"
+              data-origem="Localização"
+            >
+              Como chegar
+            </Button>
+            <Button
+              variant="outline"
+              href={`tel:${site.contact.phoneE164}`}
+              data-track="click_phone"
+              data-origem="Localização"
+            >
+              {site.contact.phoneDisplay}
+            </Button>
+          </div>
+
+          <h3 style="margin-top:36px;">Pontos de referência</h3>
+          <ul class="amen">
+            {
+              site.landmarks.map((l) => (
+                <li>
+                  {l.name} — <strong>{l.distance}</strong>
+                </li>
+              ))
+            }
+          </ul>
+
+          <h3 style="margin-top:36px;">Recepção</h3>
+          <p class="addr-text">{site.contact.reception}</p>
+        </div>
+
+        <div class="loc-map">
+          <iframe
+            src={embedSrc}
+            title="Mapa da localização do Areião Park Hotel"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .loc-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .loc-info h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .addr-text {
+      color: var(--ink-700);
+      line-height: 1.8;
+    }
+    .loc-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .loc-map {
+      border: 1px solid var(--sand-300);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+      min-height: 420px;
+    }
+    .loc-map iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      border: 0;
+    }
+    @media (max-width: 860px) {
+      .loc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</PageLayout>

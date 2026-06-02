@@ -1,0 +1,102 @@
+---
+import { site } from "@/data/site";
+
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    title: "Hotel",
+    links: [
+      { label: "O Hotel", href: "/o-hotel" },
+      { label: "Acomodações", href: "/acomodacoes" },
+      { label: "Gastronomia", href: "/gastronomia" },
+    ],
+  },
+  {
+    title: "Experiências",
+    links: [
+      { label: "Eventos", href: "/eventos" },
+      { label: "Promoções", href: "/promocoes" },
+      { label: "Galeria", href: "/galeria" },
+    ],
+  },
+  {
+    title: "Institucional",
+    links: [
+      { label: "Localização", href: "/localizacao" },
+      { label: "Contato", href: "/contato" },
+      { label: "Política de Privacidade", href: "/politica-de-privacidade" },
+    ],
+  },
+];
+
+// Redes sociais (TODO cliente). Só exibe as que tiverem URL preenchida.
+const socials = [
+  { label: "Instagram", abbr: "IG", href: site.social.instagram },
+  { label: "Facebook", abbr: "FB", href: site.social.facebook },
+  { label: "YouTube", abbr: "YT", href: site.social.youtube },
+].filter((s) => s.href);
+---
+
+<footer class="ft">
+  <div class="wm">{site.shortName.toUpperCase()}</div>
+  <div class="wmsub">{site.tagline}</div>
+
+  <div class="addr">
+    {site.address.street} · {site.address.district}<br />
+    {site.address.postalCode} · {site.address.city} — {site.address.region}<br />
+    <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> ·
+    <a href={`tel:${site.contact.phoneE164}`}>{site.contact.phoneDisplay}</a>
+  </div>
+
+  {
+    socials.length > 0 ? (
+      <div class="social">
+        {socials.map((s) => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+          >
+            {s.abbr}
+          </a>
+        ))}
+      </div>
+    ) : (
+      /* TODO (cliente): informar URLs de redes sociais em site.ts. */
+      <div class="social" aria-hidden="true">
+        <span>IG</span>
+        <span>FB</span>
+      </div>
+    )
+  }
+
+  <div class="cols">
+    {
+      cols.map((col) => (
+        <div>
+          <h5>{col.title}</h5>
+          {col.links.map((l) => (
+            <a href={l.href}>{l.label}</a>
+          ))}
+        </div>
+      ))
+    }
+    <div class="news">
+      <label for="news-email">Assine nossa newsletter</label>
+      <div class="ip">
+        <input
+          id="news-email"
+          type="email"
+          placeholder="Seu e-mail"
+          aria-label="Seu e-mail para a newsletter"
+        />
+        <button type="button" class="go" aria-label="Assinar newsletter">→</button>
+      </div>
+      {/* TODO (cliente): conectar a um serviço de newsletter (ex.: Mailchimp). */}
+    </div>
+  </div>
+
+  <div class="copy">© {year} {site.name} · Todos os direitos reservados</div>
+</footer>

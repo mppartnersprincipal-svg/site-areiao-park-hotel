@@ -1,0 +1,103 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import { site } from "@/data/site";
+
+const atualizacao = "Junho de 2026"; // TODO (cliente): data de aprovação do texto jurídico.
+---
+
+<PageLayout
+  title="Política de Privacidade"
+  description="Política de privacidade, uso de cookies e termos de uso do site do Areião Park Hotel, em conformidade com a LGPD."
+  path="/politica-de-privacidade"
+  noindex={false}
+  whatsappOrigem="Política de Privacidade"
+>
+  <section class="section">
+    <div class="guide legal">
+      <SectionHead eyebrow="Institucional" title="Política de Privacidade" />
+      <p class="note" style="margin-top:-28px;margin-bottom:32px;">
+        Última atualização: {atualizacao}
+      </p>
+
+      <!-- TODO (cliente): substituir TODO o conteúdo abaixo pelo texto jurídico
+           oficial, revisado e aprovado (LGPD, cookies e termos de uso). O texto
+           a seguir é um rascunho-base e NÃO deve ir para produção como está. -->
+
+      <h2>1. Quem somos</h2>
+      <p>
+        Este site é mantido pelo {site.name}, localizado em {site.address.street},
+        {site.address.district}, {site.address.city} — {site.address.region}.
+        Em caso de dúvidas sobre esta política, entre em contato pelo e-mail
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+      </p>
+
+      <h2>2. Dados que coletamos</h2>
+      <p>
+        Podemos coletar dados de navegação (por meio de cookies e ferramentas de
+        análise, como o Google Analytics) e dados que você nos fornece
+        voluntariamente ao entrar em contato pelos nossos canais (WhatsApp,
+        telefone ou e-mail).
+      </p>
+
+      <h2>3. Como usamos os dados</h2>
+      <p>
+        Utilizamos os dados para responder a solicitações, processar reservas e
+        melhorar a experiência no site. Não vendemos seus dados a terceiros.
+      </p>
+
+      <h2>4. Cookies</h2>
+      <p>
+        Usamos cookies para lembrar suas preferências e medir o desempenho do
+        site. Você pode gerenciar os cookies nas configurações do seu navegador.
+        Ao continuar navegando, você concorda com o uso de cookies conforme esta
+        política.
+      </p>
+
+      <h2>5. Reservas e sistemas de terceiros</h2>
+      <p>
+        As reservas são processadas em um sistema externo (HSystem). Ao seguir
+        para a reserva, você poderá estar sujeito também à política de
+        privacidade do respectivo provedor.
+      </p>
+
+      <h2>6. Seus direitos (LGPD)</h2>
+      <p>
+        Conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você pode
+        solicitar acesso, correção ou exclusão dos seus dados pessoais. Para
+        exercer esses direitos, entre em contato pelo e-mail acima.
+      </p>
+
+      <h2>7. Alterações nesta política</h2>
+      <p>
+        Esta política pode ser atualizada periodicamente. Recomendamos revisá-la
+        de tempos em tempos.
+      </p>
+
+      <p class="note" style="margin-top:32px;">
+        <strong>Aviso:</strong> conteúdo provisório. O texto jurídico definitivo
+        será fornecido e aprovado pelo cliente. <!-- TODO (cliente) -->
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .legal {
+      max-width: 760px;
+    }
+    .legal h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.4vw, 28px);
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+    .legal p {
+      color: var(--ink-700);
+      margin-bottom: 14px;
+    }
+    .legal a {
+      color: var(--gold-700);
+      text-decoration: underline;
+    }
+  </style>
+</PageLayout>

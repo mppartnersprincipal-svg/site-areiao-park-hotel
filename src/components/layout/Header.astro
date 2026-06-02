@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+import logo from "@/assets/images/logo-areiao.jpeg";
+import { site } from "@/data/site";
+import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const nav = [
+  { label: "O Hotel", href: "/o-hotel" },
+  { label: "Acomodações", href: "/acomodacoes" },
+  { label: "Gastronomia", href: "/gastronomia" },
+  { label: "Eventos", href: "/eventos" },
+  { label: "Promoções", href: "/promocoes" },
+  { label: "Galeria", href: "/galeria" },
+  { label: "Localização", href: "/localizacao" },
+  { label: "Contato", href: "/contato" },
+];
+
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(href + "/");
+
+const reserveUrl = buildReservationUrl();
+---
+
+<header class="site-header">
+  <div class="hd-util">
+    <div class="l">
+      <a href={`tel:${site.contact.phoneE164}`} data-track="click_phone" data-origem="Header"
+        >{site.contact.phoneDisplay}</a
+      >
+      &nbsp;·&nbsp; {site.contact.reception}
+    </div>
+    <div class="r">
+      <a href="/o-hotel">O Hotel</a>
+      <a href="/contato">Contato</a>
+      <a
+        href={reserveUrl}
+        {...RESERVE_LINK_ATTRS}
+        data-track="click_reservar"
+        data-origem="Header utilitário">Reservas</a
+      >
+    </div>
+  </div>
+
+  <div class="hd-main">
+    <a href="/" aria-label={`${site.name} — página inicial`}>
+      <Image
+        class="hd-logo"
+        src={logo}
+        alt={site.name}
+        height={54}
+        densities={[1, 2]}
+        loading="eager"
+      />
+    </a>
+
+    <button
+      class="hd-burger"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="main-nav"
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+
+    <nav class="hd-nav" id="main-nav" aria-label="Navegação principal">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class={isActive(item.href) ? "active" : undefined}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var header = document.querySelector(".site-header");
+    var onScroll = function () {
+      if (!header) return;
+      header.classList.toggle("scrolled", window.scrollY > 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    var burger = document.querySelector(".hd-burger");
+    var nav = document.getElementById("main-nav");
+    if (burger && nav) {
+      burger.addEventListener("click", function () {
+        var open = nav.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+        burger.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      });
+    }
+  })();
+</script>

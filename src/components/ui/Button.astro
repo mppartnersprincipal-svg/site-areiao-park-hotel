@@ -1,0 +1,46 @@
+---
+/**
+ * Botão do Design System. Renderiza <a> quando há `href`, senão <button>.
+ * Variantes: primary | outline | ghost-gold | link  (idênticas ao DS).
+ * `link` desenha a seta/linha animada (.btn-link .ln).
+ */
+interface Props {
+  variant?: "primary" | "outline" | "ghost-gold" | "link";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  newTab?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = "primary",
+  href,
+  type = "button",
+  newTab = false,
+  class: extraClass = "",
+  ...rest
+} = Astro.props;
+
+const isLink = variant === "link";
+const className = isLink
+  ? `btn-link ${extraClass}`.trim()
+  : `btn btn-${variant} ${extraClass}`.trim();
+
+const tabAttrs = newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
+const Tag = href ? "a" : "button";
+---
+
+{
+  href ? (
+    <a class={className} href={href} {...tabAttrs} {...rest}>
+      <slot />
+      {isLink && <span class="ln" aria-hidden="true" />}
+    </a>
+  ) : (
+    <button class={className} type={type} {...rest}>
+      <slot />
+      {isLink && <span class="ln" aria-hidden="true" />}
+    </button>
+  )
+}

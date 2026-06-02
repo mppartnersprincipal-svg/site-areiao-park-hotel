@@ -1,0 +1,27 @@
+---
+import Photo from "@/components/ui/Photo.astro";
+import type { ImageMetadata } from "astro";
+
+/** Tile de experiência (DS §05): foto full + overlay verde + legenda. */
+interface Props {
+  eyebrow: string;
+  title: string;
+  text?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  green?: boolean;
+  href?: string;
+}
+const { eyebrow, title, text, image, imageAlt = "", green = false, href } =
+  Astro.props;
+const Tag = href ? "a" : "div";
+---
+
+<Tag class="exp" href={href} aria-label={href ? title : undefined}>
+  <Photo src={image} alt={imageAlt} green={green && !image} sizes="(max-width: 900px) 100vw, 33vw" />
+  <div class="cap">
+    <span class="ey">{eyebrow}</span>
+    <h3>{title}</h3>
+    {text && <p>{text}</p>}
+  </div>
+</Tag>

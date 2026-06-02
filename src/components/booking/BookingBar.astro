@@ -1,0 +1,115 @@
+---
+import { site } from "@/data/site";
+
+/**
+ * Barra de reservas (DS §04 / §08). Coleta datas/hóspedes/cupom e monta a URL
+ * do HSystem na submissão, abrindo em nova aba (PRD §7.1/§8.1). Sem motor
+ * integrado. Visual idêntico ao DS (inputs sublinhado + CTA dourado).
+ */
+interface Props {
+  /** Quando true, ancora sobreposta ao hero (margin-top negativo). */
+  anchored?: boolean;
+}
+const { anchored = false } = Astro.props;
+
+const hs = site.hsystem;
+---
+
+<form
+  class={`booking${anchored ? " booking--anchored" : ""}`}
+  id="booking-form"
+  aria-label="Barra de reservas"
+>
+  <div class="field">
+    <label for="bk-checkin">Chegada</label>
+    <input class="underline" id="bk-checkin" name="checkin" type="text" inputmode="numeric" placeholder="dd / mm / aaaa" autocomplete="off" />
+  </div>
+  <div class="field">
+    <label for="bk-checkout">Saída</label>
+    <input class="underline" id="bk-checkout" name="checkout" type="text" inputmode="numeric" placeholder="dd / mm / aaaa" autocomplete="off" />
+  </div>
+  <div class="field">
+    <label for="bk-adults">Adultos</label>
+    <input class="underline" id="bk-adults" name="adults" type="text" inputmode="numeric" value="2" />
+  </div>
+  <div class="field">
+    <label for="bk-children">Crianças</label>
+    <input class="underline" id="bk-children" name="children" type="text" inputmode="numeric" value="0" />
+  </div>
+  <div class="field">
+    <label for="bk-promo">Código promo</label>
+    <input class="underline" id="bk-promo" name="promo" type="text" placeholder="ex: AREIAO10" autocomplete="off" />
+  </div>
+  <button
+    class="btn btn-primary"
+    type="submit"
+    data-track="click_reservar"
+    data-origem="Barra de reservas"
+  >
+    Reservar
+  </button>
+</form>
+
+<style>
+  .booking--anchored {
+    margin-top: -44px;
+    position: relative;
+    z-index: 3;
+    width: calc(100% - 80px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 560px) {
+    .booking--anchored {
+      width: 100%;
+      margin-top: 24px;
+    }
+  }
+</style>
+
+<script
+  is:inline
+  define:vars={{ baseUrl: hs.baseUrl, keys: hs.params }}
+>
+  (function () {
+    var form = document.getElementById("booking-form");
+    if (!form) return;
+
+    function normalizeDate(input) {
+      if (!input) return "";
+      var v = String(input).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+      var m = v.match(/^(\d{1,2})[\/\-\s]+(\d{1,2})[\/\-\s]+(\d{4})$/);
+      if (m) {
+        var d = m[1].padStart(2, "0");
+        var mo = m[2].padStart(2, "0");
+        return m[3] + "-" + mo + "-" + d;
+      }
+      return "";
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var url;
+      try {
+        url = new URL(baseUrl);
+      } catch (err) {
+        window.open(baseUrl, "_blank", "noopener");
+        return;
+      }
+      var checkin = normalizeDate(data.get("checkin"));
+      var checkout = normalizeDate(data.get("checkout"));
+      if (checkin) url.searchParams.set(keys.checkin, checkin);
+      if (checkout) url.searchParams.set(keys.checkout, checkout);
+      var adults = (data.get("adults") || "").toString().trim();
+      var children = (data.get("children") || "").toString().trim();
+      var promo = (data.get("promo") || "").toString().trim();
+      if (adults) url.searchParams.set(keys.adults, adults);
+      if (children) url.searchParams.set(keys.children, children);
+      if (promo) url.searchParams.set(keys.promo, promo);
+
+      window.open(url.toString(), "_blank", "noopener");
+    });
+  })();
+</script>

@@ -1,0 +1,34 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import Gallery from "@/components/gallery/Gallery.astro";
+import CtaBand from "@/components/sections/CtaBand.astro";
+---
+
+<PageLayout
+  title="Galeria"
+  description="Veja as fotos do Areião Park Hotel: acomodações, gastronomia, áreas de lazer e espaços para eventos em Goiânia."
+  path="/galeria"
+  whatsappOrigem="Galeria"
+>
+  <section class="section">
+    <div class="guide">
+      <SectionHead eyebrow="Galeria" title="Conheça o Areião por dentro">
+        Um passeio visual pelos nossos ambientes. Use os filtros para navegar e
+        clique em uma foto para ampliar.
+      </SectionHead>
+      <Gallery />
+      <p class="note" style="margin-top:24px;">
+        {/* TODO (cliente): substituir pelas fotos profissionais categorizadas
+            (hospedagem, gastronomia, lazer, eventos). */}
+        As imagens serão atualizadas com a nova sessão fotográfica profissional.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <CtaBand title="Gostou do que viu? Venha conhecer pessoalmente" origem="Galeria" />
+    </div>
+  </section>
+</PageLayout>

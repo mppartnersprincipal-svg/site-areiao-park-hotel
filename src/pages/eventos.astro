@@ -1,0 +1,121 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import SectionHead from "@/components/ui/SectionHead.astro";
+import ExperienceTile from "@/components/cards/ExperienceTile.astro";
+import Button from "@/components/ui/Button.astro";
+import { buildWhatsAppUrl, WHATSAPP_LINK_ATTRS } from "@/lib/whatsapp";
+
+import heroFoto from "@/assets/images/quartos/839211270.jpg";
+
+const orcamentoWa = buildWhatsAppUrl({
+  origem: "Eventos",
+  extra: "Gostaria de um orçamento para evento/locação de espaço.",
+});
+
+const espacos = [
+  {
+    eyebrow: "Auditório",
+    title: "Auditório Moderno",
+    text: "Estrutura para eventos, congressos e palestras",
+  },
+  {
+    eyebrow: "Reuniões",
+    title: "Salas de Reunião",
+    text: "Ideais para encontros corporativos",
+  },
+  {
+    eyebrow: "Confraternizações",
+    title: "Espaços para Eventos",
+    text: "Receba seus convidados com conforto",
+  },
+];
+---
+
+<PageLayout
+  title="Eventos e Espaços"
+  description="Auditório moderno e salas de reunião para eventos, congressos e reuniões corporativas em Goiânia. Solicite um orçamento ao Areião Park Hotel."
+  path="/eventos"
+  whatsappOrigem="Eventos"
+>
+  <section class="section" style="padding-bottom:clamp(40px,5vw,64px);">
+    <div class="guide">
+      <Hero
+        eyebrow="Eventos & Espaços"
+        title="O cenário certo para o seu evento"
+        text="Auditório e salas de reunião com estrutura completa, no coração de Goiânia."
+        image={heroFoto}
+        imageAlt="Espaço para eventos do Areião Park Hotel"
+        as="h2"
+      >
+        <Button
+          slot="actions"
+          variant="primary"
+          href={orcamentoWa}
+          {...WHATSAPP_LINK_ATTRS}
+          data-track="click_whatsapp"
+          data-origem="Eventos · Hero"
+        >
+          Solicitar orçamento
+        </Button>
+      </Hero>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <SectionHead
+        eyebrow="Nossos espaços"
+        title="Estrutura para cada ocasião"
+      >
+        Do congresso corporativo à reunião de equipe, oferecemos ambientes
+        versáteis e suporte para o seu evento.
+      </SectionHead>
+      <div class="exp-grid">
+        {
+          espacos.map((e, i) => (
+            <ExperienceTile
+              eyebrow={e.eyebrow}
+              title={e.title}
+              text={e.text}
+              image={i === 1 ? heroFoto : undefined}
+              imageAlt={i === 1 ? "Sala de reunião do Areião Park Hotel" : undefined}
+              green={i !== 1}
+            />
+          ))
+        }
+      </div>
+      <p class="note" style="margin-top:24px;">
+        {/* TODO (cliente): confirmar capacidades, formatos (auditório, escolar,
+            banquete) e fotos reais de cada espaço. */}
+        Capacidades e formatos sob consulta. Fale conosco para montar a melhor
+        configuração para o seu evento.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <div class="cta-band on-dark">
+        <span class="eyebrow">Orçamento sem compromisso</span>
+        <h2>Vamos planejar o seu evento juntos</h2>
+        <p>
+          Conte para a nossa equipe o tipo de evento, a data e o número de
+          participantes. Respondemos rápido pelo WhatsApp.
+        </p>
+        <div class="btn-row">
+          <Button
+            variant="primary"
+            href={orcamentoWa}
+            {...WHATSAPP_LINK_ATTRS}
+            data-track="click_whatsapp"
+            data-origem="Eventos · CTA"
+          >
+            Solicitar orçamento no WhatsApp
+          </Button>
+          <Button variant="outline" href="/contato">Ver contatos</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
