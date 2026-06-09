@@ -65,8 +65,10 @@ export const site = {
 
   // Motor de reservas externo HSystem (PRD §7.1 / §8.1). NENHUM motor integrado.
   hsystem: {
-    // TODO (cliente): URL base do motor HSystem do hotel.
-    baseUrl: "https://motor-hsystem-do-hotel.example.com/",
+    // URL base do motor HSystem do hotel (fornecida pelo cliente).
+    // companyId já vai na própria URL; demais parâmetros são anexados como query.
+    baseUrl:
+      "https://hbook.hsystem.com.br/Booking?companyId=69f21259280bd7b90b597482",
     // TODO (cliente): confirmar nomes dos parâmetros aceitos pelo HSystem.
     params: {
       checkin: "checkin",
