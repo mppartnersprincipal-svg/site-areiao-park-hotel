@@ -13,8 +13,8 @@ import { site } from "@/data/site";
 import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
 
 import fachada from "@/assets/images/fachada.jpg";
-import splitFoto from "@/assets/images/quartos/839581915.jpg";
-import expFoto from "@/assets/images/quartos/864097680.jpg";
+import splitFoto from "@/assets/images/recepcao.jpg";
+import cafeFoto from "@/assets/images/gastronomia/cafe-buffet.jpg";
 
 const rooms = (await getCollection("rooms"))
   .filter((r) => r.data.destaque)
@@ -124,24 +124,16 @@ const reserveUrl = buildReservationUrl();
   <section class="section">
     <div class="guide">
       <SectionHead eyebrow="Experiências" title="Mais que uma estadia">
-        Da mesa farta do café da manhã às áreas de convivência e aos espaços para
-        eventos.
+        Da mesa farta do café da manhã aos espaços para eventos.
       </SectionHead>
-      <div class="exp-grid">
+      <div class="exp-grid exp-grid--two">
         <ExperienceTile
           eyebrow="Gastronomia"
           title="Café da manhã"
           text="Variedade reconhecida, feita na hora"
+          image={cafeFoto}
+          imageAlt="Café da manhã do Areião Park Hotel"
           href="/gastronomia"
-          green
-        />
-        <ExperienceTile
-          eyebrow="Lazer"
-          title="Área Verde & Convivência"
-          text="Descanso e comodidade"
-          image={expFoto}
-          imageAlt="Área de convivência do Areião Park Hotel"
-          href="/galeria"
         />
         <ExperienceTile
           eyebrow="Eventos"

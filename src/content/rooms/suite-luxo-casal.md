@@ -9,7 +9,7 @@ amenidades:
   - "Wi-Fi gratuito"
   - "Estacionamento"
   - "Acesso ao restaurante"
-foto: "../../assets/images/quartos/839583703.jpg"
+foto: "../../assets/images/quartos/suite-casal.jpg"
 alt: "Suíte Luxo com cama de casal do Areião Park Hotel"
 precoLabel: "A partir de"
 preco: "R$ —"

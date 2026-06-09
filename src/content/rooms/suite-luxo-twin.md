@@ -9,7 +9,7 @@ amenidades:
   - "Wi-Fi gratuito"
   - "Estacionamento"
   - "Acesso ao restaurante"
-foto: "../../assets/images/quartos/863764365.jpg"
+foto: "../../assets/images/quartos/suite-twin.jpg"
 alt: "Suíte Luxo com duas camas de solteiro do Areião Park Hotel"
 precoLabel: "A partir de"
 preco: "R$ —"

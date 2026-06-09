@@ -18,7 +18,7 @@ export const site = {
   contact: {
     // Número de atendimento/recepção. PRD §7.2 cita (62) 9 9318-9702 — TODO confirmar.
     phoneDisplay: "(62) 9 9318-9702",
-    phoneE164: "+556293189702",
+    phoneE164: "+5562993189702",
     // wa.me usa o número apenas com dígitos e DDI 55.
     whatsapp: "5562993189702", // TODO (cliente): confirmar número de WhatsApp da recepção
     // TODO (cliente): confirmar e-mail de destino. PRD §1 usa este.

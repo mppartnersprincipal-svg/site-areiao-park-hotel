@@ -16,8 +16,13 @@ import q6 from "@/assets/images/quartos/863764903.jpg";
 import q7 from "@/assets/images/quartos/839211274.jpg";
 import q8 from "@/assets/images/quartos/864097680.jpg";
 import q9 from "@/assets/images/quartos/839211276.jpg";
-import q10 from "@/assets/images/quartos/864099748.jpg";
 import q11 from "@/assets/images/quartos/863765404.jpg";
+import cafeFrutas from "@/assets/images/gastronomia/cafe-frutas.jpg";
+import cafeBuffet from "@/assets/images/gastronomia/cafe-buffet.jpg";
+import cafeBolos from "@/assets/images/gastronomia/cafe-bolos.jpg";
+import cafeVariedade from "@/assets/images/gastronomia/cafe-variedade.jpg";
+import quartoCasalAmpla from "@/assets/images/quartos/quarto-casal-ampla.jpg";
+import quartoCasalDetalhe from "@/assets/images/quartos/quarto-casal-detalhe.jpg";
 
 export type GalleryCategory = "hosp" | "gastro" | "lazer" | "eventos";
 
@@ -34,7 +39,8 @@ export const galleryFilters: { id: "all" | GalleryCategory; label: string }[] = 
   { id: "hosp", label: "Hospedagem" },
   { id: "gastro", label: "Gastronomia" },
   { id: "lazer", label: "Lazer" },
-  { id: "eventos", label: "Eventos" },
+  // Filtro "Eventos" oculto até existirem fotos profissionais de eventos.
+  // TODO (cliente): reativar quando houver fotos da categoria.
 ];
 
 export const galleryItems: GalleryItem[] = [
@@ -47,7 +53,12 @@ export const galleryItems: GalleryItem[] = [
   { src: q6, alt: "Ambiente preparado para casal", tag: "A dois", category: "lazer" },
   { src: q7, alt: "Acomodação do Areião Park Hotel", tag: "Hospedagem", category: "hosp", size: "tall" },
   { src: q8, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "hosp" },
-  { src: q9, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "eventos", size: "wide" },
-  { src: q10, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "gastro" },
-  { src: q11, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "eventos" },
+  { src: quartoCasalAmpla, alt: "Suíte Luxo com cama de casal e área de trabalho", tag: "Suíte Luxo · Casal", category: "hosp", size: "wide" },
+  { src: cafeFrutas, alt: "Buffet de frutas e sucos naturais do café da manhã do Areião Park Hotel", tag: "Café da manhã", category: "gastro" },
+  { src: quartoCasalDetalhe, alt: "Detalhe da cama de casal da Suíte Luxo", tag: "Conforto", category: "hosp" },
+  { src: cafeBuffet, alt: "Buffet do café da manhã do Areião Park Hotel", tag: "Café da manhã", category: "gastro", size: "wide" },
+  { src: cafeVariedade, alt: "Variedade do café da manhã feita na hora no Areião Park Hotel", tag: "Variedade", category: "gastro" },
+  { src: cafeBolos, alt: "Bolos e pães caseiros do café da manhã do Areião Park Hotel", tag: "Bolos & pães", category: "gastro" },
+  { src: q9, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "hosp", size: "wide" },
+  { src: q11, alt: "Acomodação do Areião Park Hotel", tag: "Quarto", category: "hosp" },
 ];
