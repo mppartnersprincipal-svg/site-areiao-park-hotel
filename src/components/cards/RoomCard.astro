@@ -46,10 +46,6 @@ const area = [room.metragem, room.camas].filter(Boolean).join(" · ");
       {room.amenidades.map((a) => <li>{a}</li>)}
     </ul>
     <div class="foot">
-      <div class="price">
-        <small>{room.precoLabel}</small>
-        <b><span>R$</span> {room.preco.replace(/^R\$\s*/, "")}</b>
-      </div>
       <Button
         variant="link"
         href={reserveUrl}

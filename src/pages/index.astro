@@ -13,8 +13,8 @@ import { site } from "@/data/site";
 import { buildReservationUrl, RESERVE_LINK_ATTRS } from "@/lib/hsystem";
 
 import fachada from "@/assets/images/fachada.jpg";
-import splitFoto from "@/assets/images/recepcao.jpg";
-import cafeFoto from "@/assets/images/gastronomia/cafe-buffet.jpg";
+import splitFoto from "@/assets/images/fachada-detalhe.jpg";
+import cafeFoto from "@/assets/images/gastronomia/cafe-buffet-07.png";
 
 const rooms = (await getCollection("rooms"))
   .filter((r) => r.data.destaque)
@@ -36,8 +36,7 @@ const reserveUrl = buildReservationUrl();
     <div class="guide">
       <Hero
         eyebrow="Goiânia · 4 estrelas"
-        title="Sua casa fora de casa, com a excelência que você merece."
-        text="Hospitalidade familiar e estrutura de grande hotel. Conforto para uma noite de negócios ou uma longa temporada."
+        title="Sua casa fora de casa."
         image={fachada}
         imageAlt="Fachada do Areião Park Hotel em Goiânia"
         as="h1"
@@ -69,7 +68,7 @@ const reserveUrl = buildReservationUrl();
         title="Tradição que cresce, hospitalidade que evolui"
         text="Nascemos como um hotel familiar e é essa essência que carregamos até hoje. São mais de dez anos de pioneirismo, unindo a atenção aos detalhes de uma gestão familiar com a estrutura de um grande hotel."
         image={splitFoto}
-        imageAlt="Ambiente acolhedor do Areião Park Hotel"
+        imageAlt="Fachada do Areião Park Hotel com detalhe do letreiro e vidro espelhado"
       >
         <Button slot="actions" variant="link" href="/o-hotel">Saiba mais</Button>
       </Split>

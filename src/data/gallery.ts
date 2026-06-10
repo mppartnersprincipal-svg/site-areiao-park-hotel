@@ -18,7 +18,7 @@ import q8 from "@/assets/images/quartos/864097680.jpg";
 import q9 from "@/assets/images/quartos/839211276.jpg";
 import q11 from "@/assets/images/quartos/863765404.jpg";
 import cafeFrutas from "@/assets/images/gastronomia/cafe-frutas.jpg";
-import cafeBuffet from "@/assets/images/gastronomia/cafe-buffet.jpg";
+import cafeBuffet from "@/assets/images/gastronomia/cafe-buffet-07.png";
 import cafeBolos from "@/assets/images/gastronomia/cafe-bolos.jpg";
 import cafeVariedade from "@/assets/images/gastronomia/cafe-variedade.jpg";
 import quartoCasalAmpla from "@/assets/images/quartos/quarto-casal-ampla.jpg";
