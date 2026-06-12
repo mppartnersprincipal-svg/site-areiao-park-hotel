@@ -6,8 +6,6 @@ import ExperienceTile from "@/components/cards/ExperienceTile.astro";
 import Button from "@/components/ui/Button.astro";
 import { buildWhatsAppUrl, WHATSAPP_LINK_ATTRS } from "@/lib/whatsapp";
 
-import heroFoto from "@/assets/images/quartos/839211270.jpg";
-
 const orcamentoWa = buildWhatsAppUrl({
   origem: "Eventos",
   extra: "Gostaria de um orçamento para evento/locação de espaço.",
@@ -44,8 +42,7 @@ const espacos = [
         eyebrow="Eventos & Espaços"
         title="O cenário certo para o seu evento"
         text="Auditório e salas de reunião com estrutura completa, no coração de Goiânia."
-        image={heroFoto}
-        imageAlt="Espaço para eventos do Areião Park Hotel"
+        emObras
         as="h2"
       >
         <Button

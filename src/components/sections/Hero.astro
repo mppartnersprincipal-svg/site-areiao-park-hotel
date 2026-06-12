@@ -11,8 +11,18 @@ interface Props {
   imageAlt?: string;
   /** h1 na Home/página principal; h2 nas internas. */
   as?: "h1" | "h2";
+  /** Espaço ainda não pronto → mostra rótulo "Em obras" no placeholder. */
+  emObras?: boolean;
 }
-const { eyebrow, title, text, image, imageAlt = "", as = "h1" } = Astro.props;
+const {
+  eyebrow,
+  title,
+  text,
+  image,
+  imageAlt = "",
+  as = "h1",
+  emObras = false,
+} = Astro.props;
 const Heading = as;
 const hasActions = Astro.slots.has("actions");
 ---
@@ -22,6 +32,7 @@ const hasActions = Astro.slots.has("actions");
     src={image}
     alt={imageAlt}
     green={!image}
+    emObras={emObras}
     eager
     sizes="100vw"
     widths={[768, 1024, 1440, 1920]}
