@@ -33,8 +33,7 @@ export const site = {
     region: "GO",
     regionName: "Goiás",
     country: "BR",
-    // TODO (cliente): confirmar CEP.
-    postalCode: "74000-000",
+    postalCode: "74823-450",
     // TODO (cliente): confirmar coordenadas exatas para o pin do mapa.
     geo: { lat: -16.700, lng: -49.265 },
   },
