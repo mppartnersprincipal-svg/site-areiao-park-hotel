@@ -46,6 +46,19 @@ export const site = {
     { name: "Aeroporto Santa Genoveva", distance: "12 km" },
   ],
 
+  // Restaurantes famosos na região (raio de ~1 km) — distâncias aproximadas,
+  // medidas a partir do Parque Areião (vizinho do hotel).
+  nearbyRestaurants: [
+    { name: "Esquina da Picanha", cuisine: "Carnes e grelhados", distance: "300 m" },
+    { name: "Carne de Sol 1008", cuisine: "Carne de sol e cozinha nordestina", distance: "500 m" },
+    { name: "Caseratto", cuisine: "Carnes nobres e cozinha variada", distance: "600 m" },
+    { name: "Casa São Paulo", cuisine: "Cozinha brasileira", distance: "700 m" },
+    { name: "Dom Ralf", cuisine: "Cozinha peruana", distance: "700 m" },
+    { name: "Íz Restaurante", cuisine: "Cozinha contemporânea", distance: "900 m" },
+    { name: "Tajin", cuisine: "Cozinha japonesa", distance: "1 km" },
+    { name: "Las Nenas Bistrô", cuisine: "Bistrô", distance: "1 km" },
+  ],
+
   // Credenciais / números da marca (PRD §6.2)
   facts: [
     { value: "4★", label: "Estrelas" },

@@ -5,6 +5,10 @@ import Split from "@/components/sections/Split.astro";
 import SectionHead from "@/components/ui/SectionHead.astro";
 import ExperienceTile from "@/components/cards/ExperienceTile.astro";
 import CtaBand from "@/components/sections/CtaBand.astro";
+import { site } from "@/data/site";
+
+const mapsUrl = (name: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} Goiânia`)}`;
 
 import heroFoto from "@/assets/images/gastronomia/cafe-buffet-07.png";
 import splitFoto from "@/assets/images/gastronomia/cafe-mesa.jpg";
@@ -49,19 +53,13 @@ import ambienteFoto from "@/assets/images/gastronomia/cafe-ambiente.jpg";
         </SectionHead>
       </div>
 
-      <div class="exp-grid">
+      <div class="exp-grid exp-grid--two">
         <ExperienceTile
           eyebrow="Café da manhã"
           title="Variedade feita na hora"
           text="Pães, bolos, tapioca e sucos naturais"
           image={variedadeFoto}
           imageAlt="Variedade do café da manhã feita na hora no Areião Park Hotel"
-        />
-        <ExperienceTile
-          eyebrow="Restaurante"
-          title="Do almoço ao jantar"
-          text="Cardápio vasto para todos os paladares"
-          green
         />
         <ExperienceTile
           eyebrow="Ambiente"
@@ -74,6 +72,35 @@ import ambienteFoto from "@/assets/images/gastronomia/cafe-ambiente.jpg";
     </div>
   </section>
 
+  <section class="section" style="padding-top:0;">
+    <div class="guide">
+      <SectionHead eyebrow="Na região" title="Sabores na vizinhança">
+        Hospedar-se ao lado do Parque Areião também é estar a poucos minutos a
+        pé de alguns dos restaurantes mais famosos de Goiânia. Uma seleção para
+        explorar durante a estadia.
+      </SectionHead>
+
+      <ul class="resto-grid">
+        {
+          site.nearbyRestaurants.map((r) => (
+            <li>
+              <a
+                class="resto-card"
+                href={mapsUrl(r.name)}
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="eyebrow">{r.cuisine}</span>
+                <h3>{r.name}</h3>
+                <span class="resto-dist">≈ {r.distance} do hotel</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <section class="section" style="padding-top:clamp(48px,6vw,80px);">
     <div class="guide">
       <CtaBand
@@ -82,4 +109,79 @@ import ambienteFoto from "@/assets/images/gastronomia/cafe-ambiente.jpg";
       />
     </div>
   </section>
+
+  <style>
+    .resto-grid {
+      list-style: none;
+      margin: 40px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .resto-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: 100%;
+      padding: 26px 24px 22px;
+      background: var(--white);
+      border: 1px solid var(--sand-300);
+      border-radius: var(--r-lg);
+      text-decoration: none;
+      color: inherit;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+    }
+    .resto-card:hover,
+    .resto-card:focus-visible {
+      border-color: var(--gold-400);
+      box-shadow: var(--shadow-1);
+      transform: translateY(-2px);
+    }
+    .resto-card .eyebrow {
+      color: var(--ink-700);
+    }
+    .resto-card h3 {
+      font-size: 26px;
+    }
+    .resto-dist {
+      margin-top: auto;
+      padding-top: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink-700);
+    }
+    .resto-dist::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--gold-500);
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    @media (max-width: 900px) {
+      .resto-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 560px) {
+      .resto-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .resto-card {
+        transition: none;
+      }
+      .resto-card:hover,
+      .resto-card:focus-visible {
+        transform: none;
+      }
+    }
+  </style>
 </PageLayout>
