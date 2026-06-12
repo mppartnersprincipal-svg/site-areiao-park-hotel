@@ -246,6 +246,21 @@
 .ph-photo.has-img::after {
   content: none;
 }
+/* Espaços ainda não prontos no hotel: rótulo "Em obras" em destaque. */
+.ph-photo.em-obras::after {
+  content: "Em obras";
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(30, 36, 31, 0.78);
+}
+.ph-photo.em-obras.green::after {
+  color: rgba(246, 240, 228, 0.86);
+}
+.ph-photo.em-obras .pin {
+  display: none;
+}
 .ph-photo .pin {
   position: absolute;
   top: 14px;

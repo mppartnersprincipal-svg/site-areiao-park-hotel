@@ -73,14 +73,13 @@ const espacos = [
       </SectionHead>
       <div class="exp-grid">
         {
-          espacos.map((e, i) => (
+          espacos.map((e) => (
             <ExperienceTile
               eyebrow={e.eyebrow}
               title={e.title}
               text={e.text}
-              image={i === 1 ? heroFoto : undefined}
-              imageAlt={i === 1 ? "Sala de reunião do Areião Park Hotel" : undefined}
-              green={i !== 1}
+              green
+              emObras
             />
           ))
         }

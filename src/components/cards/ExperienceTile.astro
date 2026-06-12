@@ -11,14 +11,30 @@ interface Props {
   imageAlt?: string;
   green?: boolean;
   href?: string;
+  /** Espaço ainda não pronto → mostra rótulo "Em obras" no placeholder. */
+  emObras?: boolean;
 }
-const { eyebrow, title, text, image, imageAlt = "", green = false, href } =
-  Astro.props;
+const {
+  eyebrow,
+  title,
+  text,
+  image,
+  imageAlt = "",
+  green = false,
+  href,
+  emObras = false,
+} = Astro.props;
 const Tag = href ? "a" : "div";
 ---
 
 <Tag class="exp" href={href} aria-label={href ? title : undefined}>
-  <Photo src={image} alt={imageAlt} green={green && !image} sizes="(max-width: 900px) 100vw, 33vw" />
+  <Photo
+    src={image}
+    alt={imageAlt}
+    green={green && !image}
+    emObras={emObras}
+    sizes="(max-width: 900px) 100vw, 33vw"
+  />
   <div class="cap">
     <span class="ey">{eyebrow}</span>
     <h3>{title}</h3>

@@ -15,6 +15,8 @@ interface Props {
   eager?: boolean;
   sizes?: string;
   widths?: number[];
+  /** Espaço ainda não pronto no hotel → mostra rótulo "Em obras" no placeholder. */
+  emObras?: boolean;
 }
 const {
   src,
@@ -24,9 +26,16 @@ const {
   eager = false,
   sizes = "(max-width: 900px) 100vw, 33vw",
   widths = [400, 600, 900, 1200],
+  emObras = false,
 } = Astro.props;
 
-const cls = ["ph-photo", green ? "green" : "", src ? "has-img" : "", extraClass]
+const cls = [
+  "ph-photo",
+  green ? "green" : "",
+  src ? "has-img" : "",
+  !src && emObras ? "em-obras" : "",
+  extraClass,
+]
   .filter(Boolean)
   .join(" ");
 ---
