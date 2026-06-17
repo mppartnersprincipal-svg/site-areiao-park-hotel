@@ -100,7 +100,12 @@ export const site = {
 
   // Analytics (PRD §7.8). Sem ID, os eventos só vão para dataLayer (no-op).
   analytics: {
-    // TODO (cliente): ID de medição do GA4 (ex.: G-XXXXXXXXXX).
+    // Google Tag Manager. Com o GTM ativo, a configuração de GA4/conversões é
+    // feita DENTRO do container (gtm.com), não aqui. Os cliques em "Reservar" e
+    // "WhatsApp" são enviados ao dataLayer (eventos click_reservar/click_whatsapp).
+    gtmId: "GTM-ML9K84CS",
+    // ID de medição do GA4 (ex.: G-XXXXXXXXXX). Deixe vazio quando usar GTM:
+    // o GA4 deve ser disparado por uma tag dentro do GTM, evitando duplicidade.
     ga4Id: "",
   },
 } as const;

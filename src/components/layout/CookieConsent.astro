@@ -88,9 +88,17 @@
     banner.addEventListener("click", function (e) {
       var btn = e.target instanceof Element ? e.target.closest("[data-cookie]") : null;
       if (!btn) return;
+      var choice = btn.getAttribute("data-cookie");
       try {
-        localStorage.setItem(KEY, btn.getAttribute("data-cookie"));
+        localStorage.setItem(KEY, choice);
       } catch (e) {}
+      // Consent Mode v2 (GTM): atualiza o consentimento de analytics conforme a
+      // escolha. "Aceitar" libera; "Recusar" bloqueia o armazenamento.
+      if (typeof window.gtag === "function") {
+        window.gtag("consent", "update", {
+          analytics_storage: choice === "accept" ? "granted" : "denied",
+        });
+      }
       banner.hidden = true;
     });
   })();

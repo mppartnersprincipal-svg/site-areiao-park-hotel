@@ -28,6 +28,7 @@ const ogImageUrl = ogImage.startsWith("http")
 
 const jsonLd = includeHotelSchema ? hotelJsonLd() : null;
 const ga4 = site.analytics.ga4Id;
+const gtmId = site.analytics.gtmId;
 ---
 
 <!doctype html>
@@ -35,6 +36,51 @@ const ga4 = site.analytics.ga4Id;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {/* Google Tag Manager — o mais alto possível no <head> (PRD §7.8). */}
+    {
+      gtmId && (
+        <>
+          {/* Consent Mode v2 (LGPD): definido ANTES do GTM carregar. Analytics
+              segue o consentimento implícito do banner (permitido até "Recusar");
+              anúncios negados até consentimento explícito. */}
+          <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+            window.gtag = gtag;
+            var areiaoConsent = "granted";
+            try {
+              if (localStorage.getItem("areiao-cookie-consent") === "decline")
+                areiaoConsent = "denied";
+            } catch (e) {}
+            gtag("consent", "default", {
+              ad_storage: "denied",
+              ad_user_data: "denied",
+              ad_personalization: "denied",
+              analytics_storage: areiaoConsent,
+              functionality_storage: "granted",
+              security_storage: "granted",
+            });
+          </script>
+          <script is:inline define:vars={{ gtmId }}>
+            (function (w, d, s, l, i) {
+              w[l] = w[l] || [];
+              w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+              var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != "dataLayer" ? "&l=" + l : "";
+              j.async = true;
+              j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+              f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", gtmId);
+          </script>
+        </>
+      )
+    }
+    {/* End Google Tag Manager */}
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
@@ -100,18 +146,44 @@ const ga4 = site.analytics.ga4Id;
     }
   </head>
   <body>
+    {/* Google Tag Manager (noscript) — logo após a abertura do <body>. */}
+    {
+      gtmId && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+            title="Google Tag Manager"
+          />
+        </noscript>
+      )
+    }
+    {/* End Google Tag Manager (noscript) */}
+
     <slot />
 
-    <script is:inline>
-      // Rastreio de cliques em CTAs (PRD §7.8). Sem GA4, vira no-op seguro.
+    <script is:inline define:vars={{ gtmActive: Boolean(gtmId) }}>
+      // Rastreio de cliques em CTAs (PRD §7.8): envia ao dataLayer os eventos
+      // click_reservar / click_whatsapp com a origem (seção/promoção). O GTM
+      // dispara as tags a partir desses eventos. Sem GTM/GA4, é no-op seguro.
       document.addEventListener("click", function (e) {
         var el = e.target instanceof Element ? e.target.closest("[data-track]") : null;
         if (!el) return;
         var event = el.getAttribute("data-track");
         var origem = el.getAttribute("data-origem") || "";
+        var href = el.getAttribute("href") || "";
         window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: event, origem: origem });
-        if (typeof window.gtag === "function") {
+        window.dataLayer.push({
+          event: event,
+          origem: origem,
+          link_text: (el.textContent || "").trim(),
+          link_url: href,
+        });
+        // GA4 direto (sem GTM): replica via gtag. Com GTM ativo, o container já
+        // trata o evento do dataLayer — não duplicar aqui.
+        if (!gtmActive && typeof window.gtag === "function") {
           window.gtag("event", event, { origem: origem });
         }
       });
